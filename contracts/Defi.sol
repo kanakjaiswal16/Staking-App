@@ -37,9 +37,12 @@ contract DeFi {
     mapping(address => bool) public isToken;
     //check how many tokens a particular person has minted
     mapping(address => address[]) private checkOwnerToken;
+    //to have data how much amount is staked
     mapping(address => mapping(address => uint256)) public stakeAmount;
+    //to have data at which timestamp the token is staked
     mapping(address => mapping(address => uint256)) public TimeStamp;
 
+    //to emit when tokenMint function is called
     event TokenMinted(
         address tokenAddress,
         string name,
@@ -48,7 +51,10 @@ contract DeFi {
         address owner
     );
 
+    //To emit when stake function is called
     event StakeSuccess(address tokenAddress, uint256 amount, uint256 timestamp);
+
+    //To emit when unstake function is called
     event unstakesuccess(
         address tokenAddress,
         uint256 amount,
@@ -56,6 +62,7 @@ contract DeFi {
         uint256 reward
     );
 
+    //To mint new token
     function mintToken(
         string memory name,
         string memory symbol,
@@ -101,6 +108,7 @@ contract DeFi {
         return tempaddresses;
     }
 
+    //stake tokens
     function stake(address tAddress, uint amount) public {
         require(Staking == true, "paused");
         require(amount > 0, "Can't be zero");
@@ -109,12 +117,12 @@ contract DeFi {
         stakeAmount[msg.sender][tAddress] += amount;
         TimeStamp[msg.sender][tAddress] = block.timestamp;
         CustomToken token = CustomToken(tAddress);
+        //allowances are approved using javaScript and then transferFrom is called
         token.transferFrom(msg.sender, address(this), amount);
         emit StakeSuccess(tAddress, amount, TimeStamp[msg.sender][tAddress]);
     }
 
-    // function checkStakeAmount
-
+    //Unstake tokens
     function unstake(address tAddress, uint256 amount) public {
         require(Staking == true, "paused");
         require(amount > 0, "Can't be zero");
@@ -146,15 +154,18 @@ contract DeFi {
         return reward;
     }
 
+    //to get tokenBalance for specific address
     function getTokenBalance(address tAddress) public view returns (uint256) {
         uint256 balance = ERC20(tAddress).balanceOf(msg.sender);
         return balance;
     }
 
+    //to pause Staking
     function stopStaking() public onlyOwner {
         Staking = false;
     }
 
+    //to resume staking
     function startStaking() public onlyOwner {
         Staking = true;
     }
