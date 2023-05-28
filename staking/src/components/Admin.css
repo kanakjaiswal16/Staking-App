@@ -1,0 +1,30 @@
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin: 288px;
+  }
+  
+.button-enabled {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .button-disabled {
+    background-color: #ddd;
+    color: #666;
+    padding: 10px 20px;
+    border: none;
+    cursor: not-allowed;
+  }
+  
+  .button-enabled:hover {
+    background-color: #45a049;
+  }
+  
+  .button-disabled:hover {
+    background-color: #ddd;
+  }
+  
