@@ -1,13 +1,14 @@
-# Sample Hardhat Project
+# Staking Dapp
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
+A contract to mint ERC20 token and stake then and at time of unstake claim reward as per time of staking.
 
-Try running some of the following tasks:
+Flow of Project:
 
 ```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat run scripts/deploy.js
+1. Admin can pause or resume Staking.
+2. User can mint ERC20 token.
+3. User can stake their token if staking is allowed by Admin.
+4. User can unstake their locked tokens and can claim rewards.
+5. User will get 0.1% of their total amount staked per day.
+6. All the token staked by a specific user is displayed on their dashboard. 
 ```
